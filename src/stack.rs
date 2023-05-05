@@ -40,9 +40,9 @@ impl Stack for ListStack {
 
     fn push_val(&mut self, i: i32) {
         match self {
-            Val(value, other) => *self = Val(i,*self.second()),
-            Nil => *self = Val(i,Nil),
-    
+            Val(value, other) => *self = Val(i,self), //todo
+
+            Nil => *self = Val(i,Nil), //todo
         }
     }
     
@@ -80,7 +80,6 @@ mod tests {
         println! {"Testing Vec<T>"}
         fill_and_clear_impl(Vec::init());
     }
-
     #[test]
     fn linked_fill_and_clear() {
         println! {"Testing ListStack"}
