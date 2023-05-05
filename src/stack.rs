@@ -1,6 +1,6 @@
 use crate::Stack;
 
-// TODO Complete implementation
+// TODO Complete implementation//WE DID SOMETHIG
 impl Stack for Vec<i32> {
     fn init() -> Self {
         todo!()
