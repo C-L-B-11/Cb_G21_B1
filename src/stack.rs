@@ -1,6 +1,6 @@
 use crate::Stack;
 
-// TODO Complete implementation//WE DID SOMETHIG
+// TODO Complete implementation
 impl Stack for Vec<i32> {
     fn init() -> Self {
         Vec::new()
@@ -40,16 +40,23 @@ impl Stack for ListStack {
 
     fn push_val(&mut self, i: i32) {
         match self {
-            Val(value, other) => *self = Val(i,self), //todo
+            Val(value, other) => *self = Val(i,*other), //todo
 
-            Nil => *self = Val(i,Nil), //todo
+            Nil => *self = Val(i,None), //todo
         }
     }
     
     fn top_val(&self) -> Option<&i32> {
-        todo!()
+        //todo!();
+        match self {
+            Val(value, other) => {
+                let popped_value = *value;
+                
+                Some(&popped_value)
+            }
+            Nil => None,
+        }
     }
-
     fn pop_val(&mut self) -> Option<i32> {
         match self {
             Val(value, other) => {
@@ -58,14 +65,18 @@ impl Stack for ListStack {
                     None => *self = Nil,
                     Some(other) => *self= *other //todo
                 };
-                todo!()
+                Some(popped_value)
             }
             Nil => None,
         }
     }
 
     fn is_empty(&self) -> bool {
-        todo!()
+        //todo
+        match self {
+            Val(_value,_other) => false,
+            Nil => true,
+        }
     }
 }
 
