@@ -23,12 +23,16 @@ fn next_id() -> ID {
 impl<T> SyntaxTree<T> {
     /// Create a SyntaxTree with a root node that carries the given value
     pub fn new(value: T) -> SyntaxTree<T> {
-        todo!()
+        SyntaxTree {
+            id: next_id(),
+            value: value,
+            children: Vec::<SyntaxTree<T>>::new(),
+        }
     }
 
     /// Add another SyntaxTree as last child of this tree
     pub fn push_node(&mut self, new_node: SyntaxTree<T>) {
-        todo!()
+        self.children.push(new_node);
     }
 
     /// Create a new SyntaxTree with a root node that carries the given value. Add the created tree
@@ -39,7 +43,7 @@ impl<T> SyntaxTree<T> {
 
     /// Add another SyntaxTree as first child of this tree
     pub fn prepend_node(&mut self, new_node: SyntaxTree<T>) {
-        todo!()
+        self.children.insert(0,new_node);
     }
 
     /// Create a new SyntaxTree with a root node that carries the given value. Add the created tree
@@ -66,7 +70,12 @@ impl<T> SyntaxTree<T> {
         if predicate(self) {
             Some(self)
         } else {
-            todo!()
+            for index in 0..(self.children.len())
+            {   let element = &self.children[index];
+                let wanted = element.find_node(predicate);
+                if wanted.is_some() {return wanted};
+            }
+            None
         }
     }
 
@@ -77,7 +86,12 @@ impl<T> SyntaxTree<T> {
         &mut self,
         predicate: fn(&SyntaxTree<T>) -> bool,
     ) -> Option<&SyntaxTree<T>> {
-        todo!()
+        for child in self.children.iter_mut()
+            {   
+                let wanted = child.find_node_mut(predicate);
+                if wanted.is_some() {return wanted};
+            }
+            None
     }
 
     /// Return a reference to the value carried by the root of this tree
