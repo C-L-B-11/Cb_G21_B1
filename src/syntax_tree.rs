@@ -82,16 +82,17 @@ impl<T> SyntaxTree<T> {
     /// Perform a depth-first search with the given predicate.
     /// The method returns a mutable reference to the first SyntaxTree instance for which the predicate
     /// return true. If no instance is found, None is returned.
-    pub fn find_node_mut(
-        &mut self,
-        predicate: fn(&SyntaxTree<T>) -> bool,
-    ) -> Option<&SyntaxTree<T>> {
-        for child in self.children.iter_mut()
-            {   
-                let wanted = child.find_node_mut(predicate);
-                if wanted.is_some() {return wanted};
-            }
-            None
+    pub fn find_node_mut(&mut self,predicate: fn(&SyntaxTree<T>) -> bool, ) -> Option<&mut SyntaxTree<T>> {
+        if predicate(self) {
+            Some(self)
+        } else {
+            for child in self.children.iter_mut()
+                {   
+                    let wanted = child.find_node_mut(predicate);
+                    if wanted.is_some() {return wanted};
+                }
+                None
+        }
     }
 
     /// Return a reference to the value carried by the root of this tree
